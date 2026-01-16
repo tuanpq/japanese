@@ -1,8 +1,13 @@
 package io.github.tuanpq.japanese.grammar;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -22,5 +27,8 @@ public class Grammar {
 
     @Column(name = "explanation", nullable = false)
     private String explanation;
+
+    @OneToMany(mappedBy = "grammar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Example> examples = new ArrayList<>();
 
 }
