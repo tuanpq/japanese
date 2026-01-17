@@ -1,6 +1,7 @@
 package io.github.tuanpq.japanese.grammar;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,10 @@ public class GrammarService {
 
     public List<Grammar> findAllGrammars() {
         return grammarRepository.findAll();
+    }
+
+    public Optional<Grammar> getGrammarById(Long id) {
+        return grammarRepository.findById(id);
     }
 
     public Page<Grammar> findAllGrammarsWithPaging(int page, int size) {

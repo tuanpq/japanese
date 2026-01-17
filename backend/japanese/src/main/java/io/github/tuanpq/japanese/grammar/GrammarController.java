@@ -29,6 +29,11 @@ public class GrammarController {
         return grammars;
     }
 
+    @GetMapping("/{id}")
+    public Grammar getGrammarById(@PathVariable Long id) {
+        return grammarService.getGrammarById(id).orElse(null);
+    }
+
     @GetMapping("")
     public Page<Grammar> getAllGrammarsWithPaging(
             @RequestParam(defaultValue = "0") int page,
