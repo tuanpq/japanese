@@ -2,6 +2,8 @@ package io.github.tuanpq.japanese.grammar;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +15,29 @@ public class GrammarService {
         this.grammarRepository = grammarRepository;
     }
 
-    public List<Grammar> findAll() {
+    public List<Grammar> findAllGrammars() {
         return grammarRepository.findAll();
+    }
+
+    public Page<Grammar> findAllGrammarsWithPaging(int page, int size) {
+        return grammarRepository.findAll(PageRequest.of(page, size));
+    }
+
+    public Grammar addGrammar(Grammar grammar) {
+        return grammarRepository.save(grammar);
+    }
+
+    public Grammar updateGrammar(Long id, Grammar grammar) {
+        grammar.setId(id);
+        return grammarRepository.save(grammar);
+    }
+
+    public void deleteGrammar(Long id) {
+        grammarRepository.deleteById(id);
+    }
+
+    public void deleteGrammarsByIds(List<Long> ids) {
+        grammarRepository.deleteAllById(ids);
     }
 
 }
