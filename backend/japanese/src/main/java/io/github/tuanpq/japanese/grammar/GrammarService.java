@@ -20,11 +20,11 @@ public class GrammarService {
         return grammarRepository.findAll();
     }
 
-    public Optional<Grammar> getGrammarById(Long id) {
+    public Optional<Grammar> findGrammarById(Long id) {
         return grammarRepository.findById(id);
     }
 
-    public Page<Grammar> findAllGrammarsWithPaging(int page, int size) {
+    public Page<Grammar> findGrammars(int page, int size) {
         return grammarRepository.findAll(PageRequest.of(page, size));
     }
 

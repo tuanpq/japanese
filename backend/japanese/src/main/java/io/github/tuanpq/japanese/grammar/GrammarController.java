@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping(value = "/api/grammars", produces = "application/json")
+@RequestMapping(value = "/api/grammar", produces = "application/json")
 public class GrammarController {
 
     private final GrammarService grammarService;
@@ -24,24 +24,24 @@ public class GrammarController {
     }
 
     @GetMapping("/all")
-    public List<Grammar> getAll() {
+    public List<Grammar> findAllGrammars() {
         List<Grammar> grammars = grammarService.findAllGrammars();
         return grammars;
     }
 
     @GetMapping("/{id}")
-    public Grammar getGrammarById(@PathVariable Long id) {
-        return grammarService.getGrammarById(id).orElse(null);
+    public Grammar findGrammarById(@PathVariable Long id) {
+        return grammarService.findGrammarById(id).orElse(null);
     }
 
     @GetMapping("")
-    public Page<Grammar> getAllGrammarsWithPaging(
+    public Page<Grammar> findGrammars(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return grammarService.findAllGrammarsWithPaging(page, size);
+        return grammarService.findGrammars(page, size);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/add")
     public Grammar addGrammar(@RequestBody Grammar grammar) {
         return grammarService.addGrammar(grammar);
     }
