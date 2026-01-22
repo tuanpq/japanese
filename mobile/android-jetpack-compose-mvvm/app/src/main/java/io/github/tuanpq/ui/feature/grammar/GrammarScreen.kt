@@ -1,15 +1,21 @@
 package io.github.tuanpq.ui.feature.grammar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +26,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.tuanpq.domain.model.GrammarEntity
@@ -52,26 +60,40 @@ fun GrammarScreen(
 
             is UIState.Success -> {
                 val grammars = (uiState as UIState.Success<List<GrammarEntity>>).data
-                for (grammar in grammars) {
-                    println("Expression: ${grammar.expression}")
-                    println("Explanation: ${grammar.explanation}")
-                    println("")
-                }
 
                 Column(Modifier.fillMaxSize()) {
-                    LazyColumn(modifier = Modifier.weight(1f)) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
                         items(grammars.size) { index ->
                             val grammar = grammars[index]
-                            Column(
+                            ElevatedCard(
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 8.dp
+                                ),
                                 modifier = Modifier
+                                    // .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                                     .clickable(onClick = {
                                         onNavigateToGrammarDetail(grammar.id)
                                     })
-                                    .padding(16.dp)
                             ) {
-                                Text(text = grammar.expression)
-                                Text(text = grammar.explanation)
-                                HorizontalDivider()
+                                Text(
+                                    modifier = Modifier.padding(8.dp),
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    text = grammar.expression
+                                )
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = 8.dp)
+                                )
+                                Text(
+                                    modifier = Modifier.padding(8.dp),
+                                    fontSize = 14.sp,
+                                    text = grammar.explanation
+                                )
                             }
                         }
                     }
@@ -81,9 +103,10 @@ fun GrammarScreen(
                             onNavigateBack()
                         },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        shape = RoundedCornerShape(8.dp),
+                            .height(80.dp)
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(24.dp),
                     ) {
                         Text("Back to Home")
                     }
@@ -91,8 +114,10 @@ fun GrammarScreen(
             }
 
             is UIState.Error -> {
-                // val errorMessage = (uiState as UIState.Error).message
                 Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
@@ -100,18 +125,16 @@ fun GrammarScreen(
                             onNavigateBack()
                         },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        shape = RoundedCornerShape(8.dp),
+                            .height(80.dp)
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(24.dp),
                     ) {
                         Text("Back to Home")
                     }
                 }
             }
-
         }
-
-
     }
 
 }

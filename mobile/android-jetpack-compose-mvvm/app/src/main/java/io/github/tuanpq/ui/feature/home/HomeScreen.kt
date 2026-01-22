@@ -1,8 +1,10 @@
 package io.github.tuanpq.ui.feature.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -22,6 +24,9 @@ fun HomeScreen(
     onNavigateToGrammar: (String) -> Unit
 ) {
     Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         Button(
@@ -29,9 +34,10 @@ fun HomeScreen(
                 onNavigateToGrammar("Grammar")
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(8.dp),
+                .height(80.dp)
+                .padding(16.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
         ) {
             Text("Grammar")
         }
